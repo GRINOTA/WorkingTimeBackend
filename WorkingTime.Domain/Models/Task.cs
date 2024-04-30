@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace WorkingTime.Domain;
+﻿namespace WorkingTime.Domain.Models;
 
 public partial class Task
 {
@@ -9,13 +6,15 @@ public partial class Task
 
     public int ProjectId { get; set; }
 
-    public int EmployeeId { get; set; }
+    public int SupervisorId { get; set; }
 
-    public int SupervisorEmployeeId { get; set; }
+    public int ExecutorId { get; set; }
 
     public string TaskName { get; set; } = null!;
 
     public string Status { get; set; } = null!;
+
+    public DateTime Deadline { get; set; }
 
     public string? TaskDescription { get; set; }
 
@@ -23,9 +22,9 @@ public partial class Task
 
     public DateTime? EndTaskTime { get; set; }
 
-    public virtual Employee Employee { get; set; } = null!;
+    public virtual Employee Executor { get; set; } = null!;
 
     public virtual Project Project { get; set; } = null!;
 
-    public virtual Supervisor SupervisorEmployee { get; set; } = null!;
+    public virtual Supervisor Supervisor { get; set; } = null!;
 }

@@ -1,7 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using WorkingTime.Domain;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Task = WorkingTime.Domain.Task;
+using Task = WorkingTime.Domain.Models.Task;
 
 namespace WorkingTime.Persistence.EntityTypeConfigurations
 {
@@ -13,26 +12,29 @@ namespace WorkingTime.Persistence.EntityTypeConfigurations
 
             builder.ToTable("task");
 
-            builder.HasIndex(e => e.ProjectId, "fk_task_project1_idx");
+            builder.HasIndex(e => e.ExecutorId, "fk_task_employee_idx");
 
-            builder.HasIndex(e => e.SupervisorEmployeeId, "fk_task_supervisor1_idx");
+            builder.HasIndex(e => e.ProjectId, "fk_task_project_idx");
 
-            builder.HasIndex(e => e.EmployeeId, "fk_task_user1_idx");
+            builder.HasIndex(e => e.SupervisorId, "fk_task_supervisor_idx");
 
             builder.Property(e => e.Id).HasColumnName("id");
-            builder.Property(e => e.EmployeeId).HasColumnName("employee_id");
+            builder.Property(e => e.Deadline)
+                .HasColumnType("datetime")
+                .HasColumnName("deadline");
             builder.Property(e => e.EndTaskTime)
                 .HasColumnType("datetime")
                 .HasColumnName("end_task_time");
+            builder.Property(e => e.ExecutorId).HasColumnName("executor_id");
             builder.Property(e => e.ProjectId).HasColumnName("project_id");
             builder.Property(e => e.StartTaskTime)
                 .HasColumnType("datetime")
                 .HasColumnName("start_task_time");
             builder.Property(e => e.Status)
                 .HasDefaultValueSql("'не выполнено'")
-                .HasColumnType("enum('не выполнено','в процессе','выполнено')")
+                .HasColumnType("enum('не выполнено','в процессе','выполнено','просрочено')")
                 .HasColumnName("status");
-            builder.Property(e => e.SupervisorEmployeeId).HasColumnName("supervisor_employee_id");
+            builder.Property(e => e.SupervisorId).HasColumnName("supervisor_id");
             builder.Property(e => e.TaskDescription)
                 .HasColumnType("text")
                 .HasColumnName("task_description");
@@ -42,20 +44,20 @@ namespace WorkingTime.Persistence.EntityTypeConfigurations
                 .UseCollation("utf8mb3_general_ci")
                 .HasCharSet("utf8mb3");
 
-            builder.HasOne(d => d.Employee).WithMany(p => p.Tasks)
-                .HasForeignKey(d => d.EmployeeId)
+            builder.HasOne(d => d.Executor).WithMany(p => p.Tasks)
+                .HasForeignKey(d => d.ExecutorId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("fk_task_user1");
+                .HasConstraintName("fk_task_employee");
 
             builder.HasOne(d => d.Project).WithMany(p => p.Tasks)
                 .HasForeignKey(d => d.ProjectId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("fk_task_project");
 
-            builder.HasOne(d => d.SupervisorEmployee).WithMany(p => p.Tasks)
-                .HasForeignKey(d => d.SupervisorEmployeeId)
+            builder.HasOne(d => d.Supervisor).WithMany(p => p.Tasks)
+                .HasForeignKey(d => d.SupervisorId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("fk_task_supervisor1");
+                .HasConstraintName("fk_task_supervisor");
         }
     }
 }

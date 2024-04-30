@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using WorkingTime.Domain;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using WorkingTime.Domain.Models;
 
 namespace WorkingTime.Persistence.EntityTypeConfigurations
 {
@@ -30,7 +30,10 @@ namespace WorkingTime.Persistence.EntityTypeConfigurations
                 .HasColumnName("patronymic")
                 .UseCollation("utf8mb3_general_ci")
                 .HasCharSet("utf8mb3");
-            builder.Property(e => e.RoleId).HasColumnName("role_id");
+            builder.Property(e => e.Role)
+                .HasDefaultValueSql("'не определено'")
+                .HasColumnType("enum('администратор','руководитель','подчинённый','не определено')")
+                .HasColumnName("role");
             builder.Property(e => e.Surname)
                 .HasMaxLength(45)
                 .HasColumnName("surname")

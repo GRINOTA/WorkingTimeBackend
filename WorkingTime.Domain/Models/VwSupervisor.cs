@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace WorkingTime.Domain;
+﻿namespace WorkingTime.Domain.Models;
 
 public partial class VwSupervisor
 {
@@ -9,7 +6,7 @@ public partial class VwSupervisor
 
     public int Id { get; set; }
 
-    public int RoleId { get; set; }
+    public string Role { get; set; } = null!;
 
     public string Surname { get; set; } = null!;
 

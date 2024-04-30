@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace WorkingTime.Domain;
+﻿namespace WorkingTime.Domain.Models;
 
 public partial class Employee
 {
     public int Id { get; set; }
 
-    public int RoleId { get; set; }
+    public string Role { get; set; } = null!;
 
     public string Surname { get; set; } = null!;
 
@@ -19,7 +16,7 @@ public partial class Employee
 
     public string Password { get; set; } = null!;
 
-    public virtual Role Role { get; set; } = null!;
+    public virtual Subordinate? Subordinate { get; set; }
 
     public virtual Supervisor? Supervisor { get; set; }
 

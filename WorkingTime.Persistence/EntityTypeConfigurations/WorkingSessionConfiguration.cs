@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using WorkingTime.Domain;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using WorkingTime.Domain.Models;
 
 namespace WorkingTime.Persistence.EntityTypeConfigurations
 {
@@ -12,7 +12,7 @@ namespace WorkingTime.Persistence.EntityTypeConfigurations
 
             builder.ToTable("working_session");
 
-            builder.HasIndex(e => e.EmployeeId, "fk_working_session_user1_idx");
+            builder.HasIndex(e => e.EmployeeId, "fk_working_session_employee_idx");
 
             builder.Property(e => e.Id).HasColumnName("id");
             builder.Property(e => e.CompletedTaskNumber)
@@ -37,7 +37,7 @@ namespace WorkingTime.Persistence.EntityTypeConfigurations
             builder.HasOne(d => d.Employee).WithMany(p => p.WorkingSessions)
                 .HasForeignKey(d => d.EmployeeId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("fk_working_session_user1");
+                .HasConstraintName("fk_working_session_employee");
         }
     }
 }

@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using WorkingTime.Domain;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using WorkingTime.Domain.Models;
 
 namespace WorkingTime.Persistence.EntityTypeConfigurations
 {
