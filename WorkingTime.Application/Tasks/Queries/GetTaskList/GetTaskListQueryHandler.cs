@@ -1,0 +1,31 @@
+﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
+using MediatR;
+using Microsoft.EntityFrameworkCore;
+using WorkingTime.Application.Interfaces;
+using WorkingTime.Application.Tasks.Query.GetTaskList;
+
+namespace WorkingTime.Application.Tasks.Queries.GetTaskList
+{
+    public class GetTaskListQueryHandler : IRequestHandler<GetTaskListQuery, TaskListVm>
+    {
+        private readonly IWorkingTimeDbContext _dbContext;
+        private readonly IMapper _mapper;
+
+        public GetTaskListQueryHandler(IWorkingTimeDbContext dbContext, IMapper mapper)
+        {
+            _dbContext = dbContext;
+            _mapper = mapper;
+        }
+
+        public async Task<TaskListVm> Handle(GetTaskListQuery request, CancellationToken cancellationToken)
+        {
+            var tasksQuery = await _dbContext.Tasks
+                .Where(task => task.ExecutorId == request.ExecutorId && task.ProjectId == request.ProjectId)
+                .ProjectTo<TaskLookupDto>(_mapper.ConfigurationProvider)
+                .ToListAsync(cancellationToken);
+
+            return new TaskListVm { Tasks = tasksQuery };
+        }
+    }
+}
