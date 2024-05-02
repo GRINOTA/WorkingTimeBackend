@@ -399,3 +399,5 @@ FodyWeavers.xsd
 
 #connection string db
 Connections.config
+
+appsettings.json
