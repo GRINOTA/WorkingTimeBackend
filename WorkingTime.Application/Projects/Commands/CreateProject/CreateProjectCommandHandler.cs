@@ -18,7 +18,8 @@ namespace WorkingTime.Application.Projects.Commands.CreateProject
             var project = new Project
             {
                 ProjectName = request.ProjectName,
-                ProjectDescription = request.ProjectDescription
+                ProjectDescription = request.ProjectDescription,
+                SupervisorEmployeeId = request.CreatorId
             };
 
             await _dbContext.Projects.AddAsync(project, cancellationToken);

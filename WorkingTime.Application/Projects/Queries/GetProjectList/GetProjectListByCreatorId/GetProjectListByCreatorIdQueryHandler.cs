@@ -3,24 +3,24 @@ using AutoMapper.QueryableExtensions;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using WorkingTime.Application.Interfaces;
-using WorkingTime.Application.Projects.Queries.GetProjectList;
 
-namespace WorkingTime.Application.Projects.Queries.GetAllProjectList
+namespace WorkingTime.Application.Projects.Queries.GetProjectList.GetProjectListByCreatorId
 {
-    public class GetAllProjectListQueryHandler : IRequestHandler<GetProjectListQuery, ProjectListVm>
+    public class GetProjectListByCreatorIdQueryHandler : IRequestHandler<GetProjectListByCreatorIdQuery, ProjectListVm>
     {
         private readonly IWorkingTimeDbContext _dbContext;
         private readonly IMapper _mapper;
 
-        public GetAllProjectListQueryHandler(IWorkingTimeDbContext dbContext, IMapper mapper)
+        public GetProjectListByCreatorIdQueryHandler(IWorkingTimeDbContext dbContext, IMapper mapper)
         {
             _dbContext = dbContext;
             _mapper = mapper;
         }
 
-        public async Task<ProjectListVm> Handle(GetProjectListQuery request, CancellationToken cancellationToken)
+        public async Task<ProjectListVm> Handle(GetProjectListByCreatorIdQuery request, CancellationToken cancellationToken)
         {
             var projectsQuery = await _dbContext.Projects
+                .Where(project => project.SupervisorEmployeeId == request.CreatorId)
                 .ProjectTo<ProjectLookupDto>(_mapper.ConfigurationProvider)
                 .ToListAsync(cancellationToken);
 

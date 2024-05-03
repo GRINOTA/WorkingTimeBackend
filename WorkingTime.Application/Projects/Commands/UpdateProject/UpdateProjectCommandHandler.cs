@@ -1,6 +1,5 @@
 ﻿using MediatR;
 using Microsoft.EntityFrameworkCore;
-using System;
 using WorkingTime.Application.Common.Exceptions;
 using WorkingTime.Application.Interfaces;
 using WorkingTime.Domain.Models;
@@ -20,7 +19,7 @@ namespace WorkingTime.Application.Projects.Commands.UpdateProject
             var entity = 
                 await _dbContext.Projects.FirstOrDefaultAsync(project => project.Id == request.Id, cancellationToken);
 
-            if (entity == null)
+            if (entity == null || entity.SupervisorEmployeeId != request.CreatorId)
             {
                 throw new NotFoundException(nameof(Project), request.Id);
             }

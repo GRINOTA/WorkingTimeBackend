@@ -1,9 +1,10 @@
 ﻿using AutoMapper;
+using WorkingTime.Application.Common.Mappings;
 using WorkingTime.Domain.Models;
 
 namespace WorkingTime.Application.Projects.Queries.GetProjectList
 {
-    public class ProjectLookupDto
+    public class ProjectLookupDto : IMapWith<Project>
     {
         public int Id { get; set; }
         public string ProjectName { get; set; }

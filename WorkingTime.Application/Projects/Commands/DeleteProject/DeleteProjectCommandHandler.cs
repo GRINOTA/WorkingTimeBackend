@@ -1,5 +1,4 @@
 ﻿using MediatR;
-using System;
 using WorkingTime.Application.Common.Exceptions;
 using WorkingTime.Application.Interfaces;
 using WorkingTime.Domain.Models;
@@ -18,7 +17,7 @@ namespace WorkingTime.Application.Projects.Commands.DeleteProject
         {
             var entity = await _dbContext.Projects.FindAsync(new object[] { request.Id }, cancellationToken);
 
-            if (entity == null)
+            if (entity == null || entity.SupervisorEmployeeId != request.CreatorId)
             {
                 throw new NotFoundException(nameof(Project), request.Id);
             }
