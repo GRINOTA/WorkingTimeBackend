@@ -1,5 +1,4 @@
 ﻿namespace WorkingTime.Domain.Models;
-
 public partial class Subordinate
 {
     public int EmployeeId { get; set; }

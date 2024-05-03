@@ -16,8 +16,6 @@ namespace WorkingTime.Persistence.EntityTypeConfigurations
 
             builder.HasIndex(e => e.ProjectId, "fk_task_project_idx");
 
-            builder.HasIndex(e => e.SupervisorId, "fk_task_supervisor_idx");
-
             builder.Property(e => e.Id).HasColumnName("id");
             builder.Property(e => e.Deadline)
                 .HasColumnType("datetime")
@@ -34,7 +32,6 @@ namespace WorkingTime.Persistence.EntityTypeConfigurations
                 .HasDefaultValueSql("'не выполнено'")
                 .HasColumnType("enum('не выполнено','в процессе','выполнено','просрочено')")
                 .HasColumnName("status");
-            builder.Property(e => e.SupervisorId).HasColumnName("supervisor_id");
             builder.Property(e => e.TaskDescription)
                 .HasColumnType("text")
                 .HasColumnName("task_description");
@@ -53,11 +50,6 @@ namespace WorkingTime.Persistence.EntityTypeConfigurations
                 .HasForeignKey(d => d.ProjectId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("fk_task_project");
-
-            builder.HasOne(d => d.Supervisor).WithMany(p => p.Tasks)
-                .HasForeignKey(d => d.SupervisorId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("fk_task_supervisor");
         }
     }
 }

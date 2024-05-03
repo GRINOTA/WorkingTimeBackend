@@ -12,6 +12,8 @@ namespace WorkingTime.Persistence.EntityTypeConfigurations
 
             builder.ToTable("project");
 
+            builder.HasIndex(e => e.SupervisorEmployeeId, "fk_project_supervisor_idx");
+
             builder.Property(e => e.Id).HasColumnName("id");
             builder.Property(e => e.ProjectDescription)
                 .HasColumnType("text")
@@ -21,6 +23,12 @@ namespace WorkingTime.Persistence.EntityTypeConfigurations
                 .HasColumnName("project_name")
                 .UseCollation("utf8mb3_general_ci")
                 .HasCharSet("utf8mb3");
+            builder.Property(e => e.SupervisorEmployeeId).HasColumnName("supervisor_employee_id");
+
+            builder.HasOne(d => d.SupervisorEmployee).WithMany(p => p.Projects)
+                .HasForeignKey(d => d.SupervisorEmployeeId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("fk_project_supervisor");
         }
     }
 }

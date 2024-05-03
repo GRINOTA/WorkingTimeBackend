@@ -6,8 +6,6 @@ public partial class Task
 
     public int ProjectId { get; set; }
 
-    public int SupervisorId { get; set; }
-
     public int ExecutorId { get; set; }
 
     public string TaskName { get; set; } = null!;
@@ -25,6 +23,4 @@ public partial class Task
     public virtual Employee Executor { get; set; } = null!;
 
     public virtual Project Project { get; set; } = null!;
-
-    public virtual Supervisor Supervisor { get; set; } = null!;
 }
