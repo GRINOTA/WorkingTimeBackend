@@ -17,6 +17,7 @@ namespace WorkingTime.Persistence.EntityTypeConfigurations
                 .HasColumnName("creator_first_name")
                 .UseCollation("utf8mb3_general_ci")
                 .HasCharSet("utf8mb3");
+            builder.Property(e => e.CreatorId).HasColumnName("creator_id");
             builder.Property(e => e.CreatorPatronymic)
                 .HasMaxLength(45)
                 .HasColumnName("creator_patronymic")

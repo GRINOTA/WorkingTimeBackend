@@ -4,6 +4,8 @@ public partial class VwProjectsTask
 {
     public int Id { get; set; }
 
+    public int CreatorId { get; set; }
+
     public string ProjectName { get; set; } = null!;
 
     public string TaskName { get; set; } = null!;
