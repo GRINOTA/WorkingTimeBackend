@@ -1,4 +1,6 @@
 ﻿using MediatR;
+using Microsoft.EntityFrameworkCore;
+using WorkingTime.Application.Common.Exceptions;
 using WorkingTime.Application.Interfaces;
 
 namespace WorkingTime.Application.Tasks.Commands.CreateTask
@@ -12,11 +14,19 @@ namespace WorkingTime.Application.Tasks.Commands.CreateTask
         }
         public async Task<int> Handle(CreateTaskCommand request, CancellationToken cancellationToken)
         {
+            var projectCreator = await _dbContext.Projects
+                .Where(p => p.Id == request.ProjectId && p.SupervisorEmployeeId == request.CreatorId)
+                .FirstOrDefaultAsync();
+
+            if (projectCreator == null)
+            {
+                throw new NotFoundException(nameof(Projects), request.ProjectId);
+            }
+
             var task = new Domain.Models.Task
             {
                 ProjectId = request.ProjectId,
                 ExecutorId = request.ExecutorId,
-                SupervisorId = request.SupervisorId,
                 TaskName = request.TaskName,
                 TaskDescription = request.TaskDescription,
                 Deadline = request.Deadline

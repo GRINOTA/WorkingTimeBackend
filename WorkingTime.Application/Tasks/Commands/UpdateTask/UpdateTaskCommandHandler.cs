@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using WorkingTime.Application.Common.Exceptions;
 using WorkingTime.Application.Interfaces;
+using WorkingTime.Application.Projects.Queries.GetProjectList.GetProjectListByCreatorId;
 using Task = WorkingTime.Domain.Models.Task;
 
 namespace WorkingTime.Application.Tasks.Commands.UpdateTask
@@ -16,19 +17,40 @@ namespace WorkingTime.Application.Tasks.Commands.UpdateTask
         }
         public async System.Threading.Tasks.Task Handle(UpdateTaskCommand request, CancellationToken cancellationToken)
         {
-            var entity = await _dbContext.Tasks.FirstOrDefaultAsync(task => task.Id == request.Id);
+            var projectCreator = await _dbContext.Projects
+                .Join(
+                    _dbContext.Tasks,
+                    p => p.Id,
+                    t => t.ProjectId,
+                    (p, t) => new
+                    {
+                        taskId = t.Id,
+                        creatorId = p.SupervisorEmployeeId
+                    })
+                .Where(t => t.taskId == request.Id)
+                .FirstOrDefaultAsync();
 
-            if (entity == null || entity.SupervisorId != request.SupervisorId)
+            var task = await _dbContext.Tasks.FirstOrDefaultAsync(task => task.Id == request.Id);
+
+            if (task == null || projectCreator.creatorId != request.CreatorId || projectCreator == null)
             {
                 throw new NotFoundException(nameof(Task), request.Id);
             }
 
-            entity.SupervisorId = request.SupervisorId;
-            entity.ProjectId = request.ProjectId;
-            entity.ExecutorId = request.ExecutorId;
-            entity.TaskName = request.TaskName;
-            entity.TaskDescription = request.TaskDescription;
-            entity.Deadline = request.Deadline;
+            if (request.ProjectId != null)
+                task.ProjectId = (int)request.ProjectId;
+
+            if (request.ExecutorId != null)
+                task.ExecutorId = (int)request.ExecutorId;
+
+            if (request.TaskName != null)
+                task.TaskName = request.TaskName;
+
+            if (request.TaskDescription != null)
+                task.TaskDescription = request.TaskDescription;
+
+            if (request.Deadline != null)
+                task.Deadline = (DateTime)request.Deadline;
 
             await _dbContext.SaveChangesAsync(cancellationToken);
         }

@@ -2,9 +2,9 @@
 using WorkingTime.Application.Common.Mappings;
 using WorkingTime.Domain.Models;
 
-namespace WorkingTime.Application.Tasks.Queries.GetTaskDetail
+namespace WorkingTime.Application.Tasks.Queries.GetTaskDetail.GetTaskDetailForCreator
 {
-    public class TaskDetailVm : IMapWith<VwProjectsTask>
+    public class TaskDetailForCreatorVm : IMapWith<VwProjectsTask>
     {
         public int Id { get; set; }
         public string ProjectName { get; set; }
@@ -14,17 +14,17 @@ namespace WorkingTime.Application.Tasks.Queries.GetTaskDetail
         public string Status { get; set; }
         public DateTime? StartTask { get; set; }
         public DateTime? EndTask { get; set; }
-        public string CreatorSurname { get; set; }
-        public string CreatorFirstName { get; set; }
-        public string? CreatorPatronymic { get; set; }
+        public string ExecutorSurname { get; set; }
+        public string ExecutorFirstName { get; set; }
+        public string? ExecutorPatronymic { get; set; }
 
         public void Mapping(Profile profile)
         {
-            profile.CreateMap<VwProjectsTask, TaskDetailVm>()
+            profile.CreateMap<VwProjectsTask, TaskDetailForCreatorVm>()
                 .ForMember(tdDto => tdDto.Id,
                     opt => opt.MapFrom(task => task.Id))
                 .ForMember(tdDto => tdDto.ProjectName,
-                    opt => opt.MapFrom(task => ProjectName))
+                    opt => opt.MapFrom(task => task.ProjectName))
                 .ForMember(tdDto => tdDto.TaskName,
                     opt => opt.MapFrom(task => task.TaskName))
                 .ForMember(tdDto => tdDto.TaskDescription,
@@ -37,14 +37,13 @@ namespace WorkingTime.Application.Tasks.Queries.GetTaskDetail
                     opt => opt.MapFrom(task => task.StartTask))
                 .ForMember(tdDto => tdDto.EndTask,
                     opt => opt.MapFrom(task => task.EndTask))
-                .ForMember(tdDto => tdDto.CreatorSurname,
-                    opt => opt.MapFrom(task => task.CreatorSurname))
-                .ForMember(tdDto => tdDto.CreatorFirstName,
-                    opt => opt.MapFrom(task => task.CreatorFirstName))
-                .ForMember(tdDto => tdDto.CreatorPatronymic,
-                    opt => opt.MapFrom(task => task.CreatorPatronymic));
+                .ForMember(tdDto => tdDto.ExecutorSurname,
+                    opt => opt.MapFrom(task => task.ExecutorSurname))
+                .ForMember(tdDto => tdDto.ExecutorFirstName,
+                    opt => opt.MapFrom(task => task.ExecutorFirstName))
+                .ForMember(tdDto => tdDto.ExecutorPatronymic,
+                    opt => opt.MapFrom(task => task.ExecutorPatronymic));
         }
-
 
 
     }

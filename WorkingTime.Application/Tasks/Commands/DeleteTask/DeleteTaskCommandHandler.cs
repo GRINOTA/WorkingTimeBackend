@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.EntityFrameworkCore;
 using WorkingTime.Application.Common.Exceptions;
 using WorkingTime.Application.Interfaces;
 using Task = WorkingTime.Domain.Models.Task;
@@ -14,14 +15,27 @@ namespace WorkingTime.Application.Tasks.Commands.DeleteTask
         }
         public async System.Threading.Tasks.Task Handle(DeleteTaskCommand request, CancellationToken cancellationToken)
         {
-            var entity = await _dbContext.Tasks.FindAsync(new object[] { request.Id }, cancellationToken);
+            var projectCreator = await _dbContext.Projects
+                .Join(
+                    _dbContext.Tasks,
+                    p => p.Id,
+                    t => t.ProjectId,
+                    (p, t) => new
+                    {
+                        taskId = t.Id,
+                        creatorId = p.SupervisorEmployeeId
+                    })
+                .Where(t => t.taskId == request.Id)
+                .FirstOrDefaultAsync();
 
-            if (entity == null || entity.SupervisorId == request.SupervisorId)
+            var task = await _dbContext.Tasks.FindAsync(new object[] { request.Id }, cancellationToken);
+
+            if (task == null || projectCreator.creatorId != request.CreatorId || projectCreator == null)
             {
                 throw new NotFoundException(nameof(Task), request.Id);
             }
 
-            _dbContext.Tasks.Remove(entity);
+            _dbContext.Tasks.Remove(task);
             await _dbContext.SaveChangesAsync(cancellationToken);
         }
     }

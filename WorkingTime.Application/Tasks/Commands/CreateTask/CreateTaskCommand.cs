@@ -4,7 +4,7 @@ namespace WorkingTime.Application.Tasks.Commands.CreateTask
 {
     public class CreateTaskCommand : IRequest<int>
     {
-        public int SupervisorId { get; set; }
+        public int CreatorId { get; set; }
         public int ExecutorId { get; set; }
         public int ProjectId { get; set; }
         public string TaskName { get; set; }
