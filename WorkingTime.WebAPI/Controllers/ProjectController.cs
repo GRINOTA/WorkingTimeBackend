@@ -56,9 +56,9 @@ namespace WorkingTime.WebAPI.Controllers
                 ProjectName = name,
                 ProjectDescription = description
             };
+
             await Mediator.Send(command);
             return NoContent();
-
         }
 
         [HttpDelete("delete/{id}")]
