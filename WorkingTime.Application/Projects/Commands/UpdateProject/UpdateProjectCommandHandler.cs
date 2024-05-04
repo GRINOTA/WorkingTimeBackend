@@ -24,8 +24,11 @@ namespace WorkingTime.Application.Projects.Commands.UpdateProject
                 throw new NotFoundException(nameof(Project), request.Id);
             }
 
-            entity.ProjectName = request.ProjectName;
-            entity.ProjectDescription = request.ProjectDescription;
+            if(request.ProjectName != null)
+                entity.ProjectName = request.ProjectName;
+
+            if(request.ProjectDescription != null)
+                entity.ProjectDescription = request.ProjectDescription;
 
             await _dbContext.SaveChangesAsync(cancellationToken);
         }
