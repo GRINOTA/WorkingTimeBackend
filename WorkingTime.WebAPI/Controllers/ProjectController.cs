@@ -1,10 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using WorkingTime.Application.Projects.Commands.CreateProject;
-using WorkingTime.Application.Projects.Commands.DeleteProject;
-using WorkingTime.Application.Projects.Commands.UpdateProject;
-using WorkingTime.Application.Projects.Queries.GetProjectList;
-using WorkingTime.Application.Projects.Queries.GetProjectList.GetProjectListByCreatorId;
-using WorkingTime.Application.Projects.Queries.GetProjectList.GetProjectListByExecutorId;
+using WorkingTime.Application.Features.Projects.Queries.GetProjectList;
+using WorkingTime.Application.Features.Projects.Commands.CreateProject;
+using WorkingTime.Application.Features.Projects.Commands.DeleteProject;
+using WorkingTime.Application.Features.Projects.Commands.UpdateProject;
+using WorkingTime.Application.Features.Projects.Queries.GetProjectList.GetProjectListByCreatorId;
+using WorkingTime.Application.Features.Projects.Queries.GetProjectList.GetProjectListByExecutorId;
 
 namespace WorkingTime.WebAPI.Controllers
 {

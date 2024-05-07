@@ -1,18 +1,12 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using WorkingTime.Application.Projects.Queries.GetProjectList.GetProjectListByExecutorId;
-using WorkingTime.Application.Projects.Queries.GetProjectList;
-using WorkingTime.Application.Tasks.Queries.GetTaskList.GetTaskListForExecutor;
-using WorkingTime.Application.Tasks.Queries.GetTaskList.GetTaskListForCreator;
-using WorkingTime.Application.Tasks.Queries.GetTaskDetail;
-using WorkingTime.Application.Tasks.Queries.GetTaskList;
-using WorkingTime.Application.Tasks.Queries.GetTaskDetail.GetTaskDetailForExecutor;
-using WorkingTime.Application.Tasks.Queries.GetTaskDetail.GetTaskDetailForCreator;
-using WorkingTime.Application.Projects.Commands.CreateProject;
-using WorkingTime.Application.Tasks.Commands.CreateTask;
-using WorkingTime.Application.Projects.Commands.UpdateProject;
-using WorkingTime.Application.Tasks.Commands.UpdateTask;
-using WorkingTime.Application.Projects.Commands.DeleteProject;
-using WorkingTime.Application.Tasks.Commands.DeleteTask;
+using WorkingTime.Application.Features.Tasks.Queries.GetTaskList.GetTaskListForExecutor;
+using WorkingTime.Application.Features.Tasks.Queries.GetTaskList.GetTaskListForCreator;
+using WorkingTime.Application.Features.Tasks.Commands.CreateTask;
+using WorkingTime.Application.Features.Tasks.Commands.UpdateTask;
+using WorkingTime.Application.Features.Tasks.Commands.DeleteTask;
+using WorkingTime.Application.Features.Tasks.Queries.GetTaskList;
+using WorkingTime.Application.Features.Tasks.Queries.GetTaskDetail.GetTaskDetailForCreator;
+using WorkingTime.Application.Features.Tasks.Queries.GetTaskDetail.GetTaskDetailForExecutor;
 
 namespace WorkingTime.WebAPI.Controllers
 {
