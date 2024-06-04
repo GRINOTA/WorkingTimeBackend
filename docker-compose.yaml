@@ -1,0 +1,23 @@
+services:
+  workingtimeweb:
+    container_name: workingtimeweb
+    hostname: workingtimeweb
+    image: workingtimeweb
+    build:
+      context: .
+      dockerfile: Dockerfile
+    # environment:
+    #   - ConnectionStrings__MyDefaultConnection
+    #   - ASPNETCORE_URLS
+    # env_file:
+    #   - path: ./webapi.env
+    #     required: true
+    restart: always
+    networks:
+      - frontend
+
+networks:
+  frontend:
+    external: true
+    driver: bridge
+    name: services
