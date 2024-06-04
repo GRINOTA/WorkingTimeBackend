@@ -40,6 +40,7 @@ namespace WorkingTime.Persistence.EntityTypeConfigurations
                 .HasColumnName("task_name")
                 .UseCollation("utf8mb3_general_ci")
                 .HasCharSet("utf8mb3");
+            builder.Property(e => e.TotalTaskTime).HasColumnName("total_task_time");
 
             builder.HasOne(d => d.Executor).WithMany(p => p.Tasks)
                 .HasForeignKey(d => d.ExecutorId)

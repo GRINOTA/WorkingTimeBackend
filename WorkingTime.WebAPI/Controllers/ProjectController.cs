@@ -5,12 +5,23 @@ using WorkingTime.Application.Features.Projects.Commands.DeleteProject;
 using WorkingTime.Application.Features.Projects.Commands.UpdateProject;
 using WorkingTime.Application.Features.Projects.Queries.GetProjectList.GetProjectListByCreatorId;
 using WorkingTime.Application.Features.Projects.Queries.GetProjectList.GetProjectListByExecutorId;
+using WorkingTime.Application.Features.Projects.Queries.GetProjectTimeList;
 
 namespace WorkingTime.WebAPI.Controllers
 {
     [Route("api/[controller]")]
     public class ProjectController : BaseController
     {
+        [HttpGet("list-time-executor")]
+        public async Task<ActionResult<ProjectListVm>> GetListProjectTime([FromQuery] int executorId)
+        {
+            var query = new GetProjectTimeListQuery
+            {
+                ExecutorId = executorId
+            };
+            var vm = await Mediator.Send(query);
+            return Ok(vm);
+        }
         [HttpGet("list-by-executor")]
         public async Task<ActionResult<ProjectListVm>> GetListByExecutorId([FromQuery] int executorId)
         {

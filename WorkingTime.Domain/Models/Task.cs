@@ -19,6 +19,7 @@ public partial class Task
     public DateTime? StartTaskTime { get; set; }
 
     public DateTime? EndTaskTime { get; set; }
+    public int? TotalTaskTime { get; set; }
 
     public virtual Employee Executor { get; set; } = null!;
 
