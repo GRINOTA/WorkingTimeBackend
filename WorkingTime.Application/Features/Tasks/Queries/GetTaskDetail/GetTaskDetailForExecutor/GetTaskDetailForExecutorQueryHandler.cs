@@ -20,12 +20,12 @@ namespace WorkingTime.Application.Features.Tasks.Queries.GetTaskDetail.GetTaskDe
 
         public async Task<TaskDetailForExecutorVm> Handle(GetTaskDetailForExecutorQuery request, CancellationToken cancellationToken)
         {
-            var task = await _dbContext.Tasks.Where(task => task.Id == request.Id).FirstOrDefaultAsync();
+            var task = await _dbContext.Tasks.Where(task => task.Id == request.Id).Select(t => t.ExecutorId).FirstOrDefaultAsync();
 
             var taskDetail = await _dbContext.VwProjectsTasks
                 .FirstOrDefaultAsync(task => task.Id == request.Id, cancellationToken);
 
-            if (taskDetail == null || task.ExecutorId != request.ExecutorId || task == null)
+            if (taskDetail == null || task != request.ExecutorId)
             {
                 throw new NotFoundException(nameof(Task), request.Id);
             }

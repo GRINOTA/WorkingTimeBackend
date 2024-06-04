@@ -7,6 +7,7 @@ using WorkingTime.Application.Features.Tasks.Commands.DeleteTask;
 using WorkingTime.Application.Features.Tasks.Queries.GetTaskList;
 using WorkingTime.Application.Features.Tasks.Queries.GetTaskDetail.GetTaskDetailForCreator;
 using WorkingTime.Application.Features.Tasks.Queries.GetTaskDetail.GetTaskDetailForExecutor;
+using WorkingTime.Application.Features.Tasks.Queries.GetTaskListByProject;
 
 namespace WorkingTime.WebAPI.Controllers
 {
@@ -20,6 +21,19 @@ namespace WorkingTime.WebAPI.Controllers
             {
                 ExecutorId = executorId,
                 ProjectId = projectId
+            };
+
+            var vm = await Mediator.Send(query);
+            return Ok(vm);
+        }
+
+        [HttpGet("list-for-executor-project")]
+        public async Task<ActionResult<TaskListVm>> GetListForExecutorProject([FromQuery] int executorId, [FromQuery] string? status)
+        {
+            var query = new GetTaskListByProjectQuery
+            {
+                ExecutorId = executorId,
+                Status = status
             };
 
             var vm = await Mediator.Send(query);
@@ -96,17 +110,19 @@ namespace WorkingTime.WebAPI.Controllers
             [FromQuery] int? projectId,
             [FromQuery] string? name,
             [FromQuery] string? description,
-            [FromQuery] DateTime? deadline)
+            [FromQuery] DateTime? deadline,
+            [FromQuery] DateTime? startTask)
         {
             var command = new UpdateTaskCommand
             {
                 Id = id,
-                CreatorId = creatorId,
+                //CreatorId = creatorId,
                 ExecutorId = executorId,
                 ProjectId = projectId,
                 TaskName = name,
                 TaskDescription = description,
-                Deadline = deadline
+                Deadline = deadline,
+                StartTask = startTask
             };
 
             await Mediator.Send(command);

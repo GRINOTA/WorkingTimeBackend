@@ -12,7 +12,7 @@ public partial class WorkingSession
 
     public int? TotalWorkingTime { get; set; }
 
-    public int? TotalBreakTime { get; set; }
+    public bool? State { get; set; }
 
     public int? CompletedTaskNumber { get; set; }
 

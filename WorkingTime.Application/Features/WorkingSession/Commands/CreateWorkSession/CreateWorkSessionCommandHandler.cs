@@ -18,7 +18,7 @@ namespace WorkingTime.Application.Features.WorkingSession.Commands.CreateWorkSes
             {
                 EmployeeId = request.ExecutorId,
                 StartWorkingDay = request.StartWorkingDay,
-                EndWorkingDay = request.EndWorkingDay
+                State = request.State
             };
 
             await _dbContext.WorkingSessions.AddAsync(workingSession, cancellationToken);

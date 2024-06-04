@@ -31,8 +31,6 @@ namespace WorkingTime.Application.Features.WorkingSession.Commands.UpdateWorkSes
             if (request.EndWorkingDay != null)
                 workingSession.EndWorkingDay = (DateTime)request.EndWorkingDay;
 
-            if (request.TotalBreakTime != null)
-                workingSession.TotalBreakTime = request.TotalBreakTime;
 
             await _dbContext.SaveChangesAsync(cancellationToken);
         }

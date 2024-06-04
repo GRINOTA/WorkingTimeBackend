@@ -41,9 +41,6 @@ namespace WorkingTime.Persistence.EntityTypeConfigurations
                 .HasColumnName("surname")
                 .UseCollation("utf8mb3_general_ci")
                 .HasCharSet("utf8mb3");
-            builder.Property(e => e.TotalBreakTime)
-                .HasDefaultValueSql("'0'")
-                .HasColumnName("total_break_time");
             builder.Property(e => e.TotalWorkingTime).HasColumnName("total_working_time");
         }
     }

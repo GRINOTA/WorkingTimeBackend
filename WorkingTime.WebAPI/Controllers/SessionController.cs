@@ -11,7 +11,22 @@ namespace WorkingTime.WebAPI.Controllers
     [Route("api/[controller]")]
     public class SessionController : BaseController
     {
-        [HttpGet("get-list")]
+        [HttpGet("get-list-executor")]
+        public async Task<ActionResult<WorkingSessionListVm>> GetList(
+            [FromQuery] int executorId,
+            [FromQuery] DateTime? dateReport)
+        {
+            var query = new GetWorkingSessionListForExecutorQuery
+            {
+                ExecutorId = executorId,
+                DateReport = dateReport,
+            };
+
+            var vm = await Mediator.Send(query);
+            return Ok(vm);
+        }
+
+        [HttpGet("get-list-creator")]
         public async Task<ActionResult<WorkingSessionListVm>> GetList(
             [FromQuery] int creatorId,
             [FromQuery] int executorId)
@@ -46,14 +61,13 @@ namespace WorkingTime.WebAPI.Controllers
         [HttpPost("create")]
         public async Task<ActionResult<int>> Create(
             [FromQuery] int executorId,
-            [FromQuery] DateTime startDay,
-            [FromQuery] DateTime? endDay)
+            [FromQuery] DateTime startDay
+            )
         {
             var command = new CreateWorkSessionCommand
             {
                 ExecutorId = executorId,
-                StartWorkingDay = startDay,
-                EndWorkingDay = endDay
+                StartWorkingDay = startDay
             };
 
             var id = await Mediator.Send(command);
@@ -66,7 +80,7 @@ namespace WorkingTime.WebAPI.Controllers
             [FromQuery] int executorId,
             [FromQuery] DateTime? startDay,
             [FromQuery] DateTime? endDay,
-            [FromQuery] int totalBreak)
+            [FromQuery] int? totalBreak)
         {
             var command = new UpdateWorkSessionCommand
             {
@@ -74,7 +88,7 @@ namespace WorkingTime.WebAPI.Controllers
                 ExecutorId = executorId,
                 StartWorkingDay = startDay,
                 EndWorkingDay = endDay,
-                TotalBreakTime = totalBreak
+                //TotalBreakTime = totalBreak
             };
 
             await Mediator.Send(command);

@@ -2,12 +2,41 @@
 using WorkingTime.Application.Features.Employees.Commands.CreateEmployee;
 using WorkingTime.Application.Features.Employees.Queries.GetEmployeeDetailForAdmin;
 using WorkingTime.Application.Features.Employees.Queries.GetAllEmployeeListForAdmin;
+using WorkingTime.Application.Features.Employees.Queries.GetEmployee.GetEmployeeAuth;
+using WorkingTime.Application.Features.Employees.Queries.GetEmployee;
+using WorkingTime.Application.Features.Employees.Queries.GetEmployee.GetCurrentEmployee;
 
 namespace WorkingTime.WebAPI.Controllers
 {
     [Route("api/[controller]")]
     public class EmployeeController : BaseController
     {
+        [HttpGet("auth")]
+        public async Task<ActionResult<EmployeeVm>> GetAuth(
+            [FromQuery] string login,
+            [FromQuery] string password)
+        {
+            var query = new GetEmployeeAuthQuery
+            {
+                Login = login,
+                Password = password
+            };
+
+            var vm = await Mediator.Send(query);
+            return Ok(vm);
+        }
+
+        [HttpGet("current/{id}")]
+        public async Task<ActionResult<EmployeeVm>> GetCurrentEmployee(int id)
+        {
+            var query = new GetCurrentEmployeeQuery
+            {
+                Id = id
+            };
+
+            var vm = await Mediator.Send(query);
+            return Ok(vm);
+        }
         [HttpGet("list-for-admin")]
         public async Task<ActionResult<EmployeeListVm>> GetAllForAdmin([FromQuery] int adminId)
         {

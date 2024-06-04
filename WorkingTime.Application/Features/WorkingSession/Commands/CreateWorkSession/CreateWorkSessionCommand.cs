@@ -6,6 +6,7 @@ namespace WorkingTime.Application.Features.WorkingSession.Commands.CreateWorkSes
     {
         public int ExecutorId { get; set; }
         public DateTime StartWorkingDay { get; set; }
-        public DateTime? EndWorkingDay { get; set; }
+
+        public bool State { get; set; }
     }
 }

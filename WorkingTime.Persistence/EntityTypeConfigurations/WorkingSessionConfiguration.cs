@@ -29,9 +29,9 @@ namespace WorkingTime.Persistence.EntityTypeConfigurations
             builder.Property(e => e.StartWorkingDay)
                 .HasColumnType("datetime")
                 .HasColumnName("start_working_day");
-            builder.Property(e => e.TotalBreakTime)
+            builder.Property(e => e.State)
                 .HasDefaultValueSql("'0'")
-                .HasColumnName("total_break_time");
+                .HasColumnName("state");
             builder.Property(e => e.TotalWorkingTime).HasColumnName("total_working_time");
 
             builder.HasOne(d => d.Employee).WithMany(p => p.WorkingSessions)

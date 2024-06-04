@@ -31,7 +31,9 @@ namespace WorkingTime.Application.Features.Tasks.Commands.UpdateTask
 
             var task = await _dbContext.Tasks.FirstOrDefaultAsync(task => task.Id == request.Id);
 
-            if (task == null || projectCreator.creatorId != request.CreatorId || projectCreator == null)
+            if (task == null
+                //|| projectCreator.creatorId != request.CreatorId || projectCreator == null
+            )
             {
                 throw new NotFoundException(nameof(Task), request.Id);
             }
@@ -50,6 +52,8 @@ namespace WorkingTime.Application.Features.Tasks.Commands.UpdateTask
 
             if (request.Deadline != null)
                 task.Deadline = (DateTime)request.Deadline;
+            if (request.StartTask != null)
+                task.StartTaskTime = (DateTime)request.StartTask;
 
             await _dbContext.SaveChangesAsync(cancellationToken);
         }

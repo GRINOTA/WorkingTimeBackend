@@ -16,8 +16,6 @@ public partial class VwWorkingSessionEmployee
 
     public int? TotalWorkingTime { get; set; }
 
-    public int? TotalBreakTime { get; set; }
-
     public int? CompletedTaskNumber { get; set; }
 
     public decimal? PerformanceEvaluation { get; set; }
