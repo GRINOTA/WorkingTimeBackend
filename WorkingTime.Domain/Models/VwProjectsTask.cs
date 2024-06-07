@@ -13,6 +13,7 @@ public partial class VwProjectsTask
     public string? TaskDescription { get; set; }
 
     public DateTime Deadline { get; set; }
+    public bool IsOverdue { get; set; }
 
     public string Status { get; set; } = null!;
 

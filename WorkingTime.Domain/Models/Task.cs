@@ -20,6 +20,8 @@ public partial class Task
 
     public DateTime? EndTaskTime { get; set; }
     public int? TotalTaskTime { get; set; }
+    public bool IsChecked { get; set; }
+    public bool IsOverdue { get; set; }
 
     public virtual Employee Executor { get; set; } = null!;
 
