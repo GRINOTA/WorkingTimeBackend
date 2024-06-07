@@ -17,6 +17,7 @@ namespace WorkingTime.Application.Features.Tasks.Queries.GetTaskDetail.GetTaskDe
         public string CreatorSurname { get; set; }
         public string CreatorFirstName { get; set; }
         public string? CreatorPatronymic { get; set; }
+        public bool IsOverdue { get; set; }
 
         public void Mapping(Profile profile)
         {
@@ -42,7 +43,9 @@ namespace WorkingTime.Application.Features.Tasks.Queries.GetTaskDetail.GetTaskDe
                 .ForMember(tdDto => tdDto.CreatorFirstName,
                     opt => opt.MapFrom(task => task.CreatorFirstName))
                 .ForMember(tdDto => tdDto.CreatorPatronymic,
-                    opt => opt.MapFrom(task => task.CreatorPatronymic));
+                    opt => opt.MapFrom(task => task.CreatorPatronymic))
+                .ForMember(tdDto => tdDto.IsOverdue,
+                    opt => opt.MapFrom(task => task.IsOverdue));
         }
     }
 }

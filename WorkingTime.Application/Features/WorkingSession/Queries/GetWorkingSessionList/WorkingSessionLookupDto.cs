@@ -8,6 +8,7 @@ namespace WorkingTime.Application.Features.WorkingSession.Queries.GetWorkingSess
         public int Id { get; set; }
         public int TotalWorkingTime { get; set; }
         public DateTime StartWorkSession { get; set; }
+        public DateTime GroupDate { get; set; }
         public DateTime? EndWorkSession { get; set; }
         public decimal? PerfomanceEvalution { get; set; }
 
@@ -19,6 +20,8 @@ namespace WorkingTime.Application.Features.WorkingSession.Queries.GetWorkingSess
                 .ForMember(wsDto => wsDto.TotalWorkingTime,
                     opt => opt.MapFrom(ws => ws.TotalWorkingTime))
                 .ForMember(wsDto => wsDto.StartWorkSession,
+                    opt => opt.MapFrom(ws => ws.StartWorkingDay))
+                .ForMember(wsDto => wsDto.GroupDate,
                     opt => opt.MapFrom(ws => ws.StartWorkingDay.Date))
                 .ForMember(wsDto => wsDto.EndWorkSession,
                     opt => opt.MapFrom(ws => ws.EndWorkingDay))

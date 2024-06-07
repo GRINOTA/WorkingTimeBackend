@@ -32,7 +32,7 @@ namespace WorkingTime.Application.Features.Tasks.Commands.UpdateTask
             var task = await _dbContext.Tasks.FirstOrDefaultAsync(task => task.Id == request.Id);
 
             if (task == null
-                //|| projectCreator.creatorId != request.CreatorId || projectCreator == null
+            //|| projectCreator.creatorId != request.CreatorId || projectCreator == null
             )
             {
                 throw new NotFoundException(nameof(Task), request.Id);
@@ -53,7 +53,44 @@ namespace WorkingTime.Application.Features.Tasks.Commands.UpdateTask
             if (request.Deadline != null)
                 task.Deadline = (DateTime)request.Deadline;
             if (request.StartTask != null)
-                task.StartTaskTime = (DateTime)request.StartTask;
+            {
+                if (request.StartTask == "null")
+                {
+                    task.StartTaskTime = null;
+                }
+                else {
+                    if (DateTime.TryParse(request.StartTask, out DateTime date))
+                    {
+                        task.StartTaskTime = date;
+                    }
+                    else 
+                    {
+                        throw new InvalidDataException($"Ошибка в преобразование даты: {request.StartTask}");
+                    }
+                }
+                
+
+            }
+
+
+            if (request.EndTask != null)
+                if (request.EndTask == "null")
+                {
+                    task.EndTaskTime = null;
+                }
+                else
+                {
+                    if (DateTime.TryParse(request.EndTask, out DateTime date))
+                    {
+                        task.EndTaskTime = date;
+                    }
+                    else
+                    {
+                        throw new InvalidDataException($"Ошибка в преобразование даты: {request.EndTask}");
+                    }
+                }
+            if (request.IsChecked != null)
+                task.IsChecked = (bool)request.IsChecked;
 
             await _dbContext.SaveChangesAsync(cancellationToken);
         }

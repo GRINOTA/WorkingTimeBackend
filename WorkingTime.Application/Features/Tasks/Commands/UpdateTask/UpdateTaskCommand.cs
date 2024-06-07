@@ -12,6 +12,8 @@ namespace WorkingTime.Application.Features.Tasks.Commands.UpdateTask
         public string? TaskDescription { get; set; }
         public DateTime? Deadline { get; set; }
 
-        public DateTime? StartTask { get; set; }
+        public string? StartTask { get; set; }
+        public string? EndTask { get; set; }
+        public bool? IsChecked { get; set; }
     }
 }
