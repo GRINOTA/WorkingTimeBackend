@@ -28,12 +28,17 @@ namespace WorkingTime.WebAPI.Controllers
         }
 
         [HttpGet("list-for-executor-project")]
-        public async Task<ActionResult<TaskListVm>> GetListForExecutorProject([FromQuery] int executorId, [FromQuery] string? status)
+        public async Task<ActionResult<TaskListVm>> GetListForExecutorProject(
+            [FromQuery] int executorId, 
+            [FromQuery] string? status1,
+            [FromQuery] string? status2
+            )
         {
             var query = new GetTaskListByProjectQuery
             {
                 ExecutorId = executorId,
-                Status = status
+                Status1 = status1,
+                Status2 = status2
             };
 
             var vm = await Mediator.Send(query);
@@ -111,7 +116,9 @@ namespace WorkingTime.WebAPI.Controllers
             [FromQuery] string? name,
             [FromQuery] string? description,
             [FromQuery] DateTime? deadline,
-            [FromQuery] DateTime? startTask)
+            [FromQuery] string? startTask,
+            [FromQuery] string? endTask,
+            [FromQuery] bool? isChecked)
         {
             var command = new UpdateTaskCommand
             {
@@ -122,7 +129,9 @@ namespace WorkingTime.WebAPI.Controllers
                 TaskName = name,
                 TaskDescription = description,
                 Deadline = deadline,
-                StartTask = startTask
+                StartTask = startTask,
+                EndTask = endTask,
+                IsChecked = isChecked
             };
 
             await Mediator.Send(command);
