@@ -65,6 +65,9 @@ namespace WorkingTime.Persistence.EntityTypeConfigurations
             builder.Property(e => e.TaskDescription)
                 .HasColumnType("text")
                 .HasColumnName("task_description");
+            builder.Property(e => e.IsOverdue)
+                .HasDefaultValueSql("'0'")
+                .HasColumnName("is_overdue");
             builder.Property(e => e.TaskName)
                 .HasMaxLength(50)
                 .HasColumnName("task_name")

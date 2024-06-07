@@ -30,7 +30,7 @@ namespace WorkingTime.Persistence.EntityTypeConfigurations
                 .HasColumnName("start_task_time");
             builder.Property(e => e.Status)
                 .HasDefaultValueSql("'не выполнено'")
-                .HasColumnType("enum('не выполнено','в процессе','выполнено','просрочено')")
+                .HasColumnType("enum('не выполнено','в процессе','выполнено','на проверке')")
                 .HasColumnName("status");
             builder.Property(e => e.TaskDescription)
                 .HasColumnType("text")
@@ -40,6 +40,12 @@ namespace WorkingTime.Persistence.EntityTypeConfigurations
                 .HasColumnName("task_name")
                 .UseCollation("utf8mb3_general_ci")
                 .HasCharSet("utf8mb3");
+            builder.Property(e => e.IsChecked)
+                .HasDefaultValueSql("'0'")
+                .HasColumnName("is_checked");
+            builder.Property(e => e.IsOverdue)
+                .HasDefaultValueSql("'0'")
+                .HasColumnName("is_overdue");
             builder.Property(e => e.TotalTaskTime).HasColumnName("total_task_time");
 
             builder.HasOne(d => d.Executor).WithMany(p => p.Tasks)
