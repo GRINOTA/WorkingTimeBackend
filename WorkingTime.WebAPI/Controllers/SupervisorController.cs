@@ -2,12 +2,26 @@
 using WorkingTime.Application.Features.Supervisors.Queries.GetSupervisorListForAdmin;
 using WorkingTime.Application.Features.Supervisors.Commands.CreateSupervisor;
 using WorkingTime.Application.Features.Supervisors.Commands.DeleteSupervisor;
+using WorkingTime.Application.Features.Supervisors.Queries.GetSupervisorForSubordinate;
 
 namespace WorkingTime.WebAPI.Controllers
 {
     [Route("api/[controller]")]
     public class SupervisorController : BaseController
     {
+
+        [HttpGet("get")]
+        public async Task<ActionResult<SupervisorListVm>> Get([FromQuery] int subordinateId)
+        {
+            var query = new GetSupervisorForSubordinateQuery
+            {
+                SubordinateId = subordinateId
+            };
+
+            var vm = await Mediator.Send(query);
+            return Ok(vm);
+        }
+
         [HttpGet("get-for-admin")]
         public async Task<ActionResult<SupervisorListVm>> GetAll([FromQuery] int adminId)
         {
