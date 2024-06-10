@@ -52,6 +52,7 @@ namespace WorkingTime.Application.Features.Tasks.Commands.UpdateTask
 
             if (request.Deadline != null)
                 task.Deadline = (DateTime)request.Deadline;
+            task.IsChecked = (bool)request.IsChecked;
             if (request.StartTask != null)
             {
                 if (request.StartTask == "null")
