@@ -19,8 +19,8 @@ namespace WorkingTime.Application.Features.Tasks.Queries.GetTaskList.GetTaskList
 
         public async Task<TaskListVm> Handle(GetTaskListForCreatorQuery request, CancellationToken cancellationToken)
         {
-            var tasksQuery = await _dbContext.Tasks
-                .Where(task => task.Project.SupervisorEmployeeId == request.CreatorId)
+            var tasksQuery = await _dbContext.VwProjectsTasks
+                .Where(task => task.CreatorId == request.CreatorId)
                 .ProjectTo<TaskLookupDto>(_mapper.ConfigurationProvider)
                 .ToListAsync(cancellationToken);
 

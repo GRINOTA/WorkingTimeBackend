@@ -8,7 +8,7 @@ namespace WorkingTime.Application.Features.Tasks.Queries.GetTaskListByProject
     public class TaskProjectLookupDto : IMapWith<Project>
     {
         public string ProjectName { get; set; }
-        public List<TaskLookupDto> Tasks { get; set; }
+        public List<TaskLookupDtoForProject> Tasks { get; set; }
 
         public void Mapping(Profile profile) 
         {
