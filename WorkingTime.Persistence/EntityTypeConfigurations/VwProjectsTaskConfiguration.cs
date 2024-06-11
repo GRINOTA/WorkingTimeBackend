@@ -55,6 +55,7 @@ namespace WorkingTime.Persistence.EntityTypeConfigurations
                 .HasColumnName("project_name")
                 .UseCollation("utf8mb3_general_ci")
                 .HasCharSet("utf8mb3");
+            builder.Property(e => e.ProjectId).HasColumnName("project_id");
             builder.Property(e => e.StartTask)
                 .HasColumnType("datetime")
                 .HasColumnName("start_task");
