@@ -6,6 +6,8 @@ public partial class VwProjectsTask
 
     public int CreatorId { get; set; }
 
+    public int ProjectId { get; set; }
+
     public string ProjectName { get; set; } = null!;
 
     public string TaskName { get; set; } = null!;
